@@ -46,9 +46,13 @@ Default user for phpmysql is 157239n and UDZ8qSnsfZeHHKHM for the password
 
 Extended from 157239n/apache
 
-Yeah don't use this just yet, it hasn't been finalized.
+Enabled these apache modules:
+- rewrite
+- proxy
+- proxy_http
+- ssl
 
-Expose ports 80 and 443
+Also have pageTemplate.conf and newPage to set things up. It's best to look at the files to understand it.
 
 ## 157239n/basesite
 
