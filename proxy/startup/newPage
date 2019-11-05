@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pageURL=$1
+pageName=$2
+pageTemplate=`cat /startup/pageTemplate.conf`
+confFile="${pageTemplate//$/$pageURL}"
+echo "$confFile" > "/etc/apache2/sites-available/$pageName.conf"

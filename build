@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker image build --tag 157239n/basic basic/
+docker image build --tag 157239n/apache apache/
+docker image build --tag 157239n/php php/
+#docker image build --tag 157239n/proxy proxy/
+#docker image build --tag 157239n/basesite basesite/

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker push 157239n/basic
+docker push 157239n/apache
+docker push 157239n/php
+#docker push 157239n/proxy
+#docker push 157239n/basesite
