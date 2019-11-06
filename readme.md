@@ -36,6 +36,12 @@ Extended from 157239n/apache
 
 Have these installed:
 - php
+
+## 157239n/mysql
+
+Extended from 157239n/php
+
+Have these installed:
 - mysql-server
 - php-mysql
 - phpmyadmin (at /var/www/phpmyadmin)
@@ -54,19 +60,9 @@ Enabled these apache modules:
 
 Also have pageTemplate.conf and newPage to set things up. It's best to look at the files to understand it.
 
-## 157239n/basesite
-
-Extended from 157239n/php
-
-Also don't use this just yet, it still hasn't been finalized
-
 # Tools
 
 ## build
 
-Simple enough, builds these images
-
-## push
-
-Also simple enough, push these to hub.docker.com
+Simple enough, builds these images. Also it is expected that you pull the repo down, then build the images yourself. I supposed you know how to do this. If you don't, give Docker Deep Dive a read.
 
