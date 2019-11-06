@@ -64,13 +64,13 @@ Also have pageTemplate.conf and newPage to set things up. It's best to look at t
 
 ## build
 
-Simple enough, builds these images. Also it is expected that you pull the repo down, then build the images yourself. I supposed you know how to do this. If you don't, give Docker Deep Dive a read.
+Simple enough, builds these images. Also it is expected that you pull the repo down, then build the images yourself. I supposed you know how to do this, because this is stupidly simple. If you don't, you don't know how to use Docker and give Docker Deep Dive a read.
 
 # Contributing
 
 I don't think anyone's gonna contribute to this, so this is more of a note of how to do things:
 - Everything additional code should be in ./startup, then it can be natively copied to somewhere else.
-- Mounted code should stay in the service's directory (aka ./), not ./startup, and preferably in ./startup/code
-- Entry points should be in ./startup/entry.sh, with tail -f /dev/null at the end to stop the container from exiting
+- Mounted code should stay in the service's directory (aka ./), not ./startup, and preferably in ./startup/code. This is meant to be easily checked into version control and don't have to worry about service segmentation.
+- Entry points should be in ./startup/entry.sh, with tail -f /dev/null at the end to stop the container from exiting.
 - If you somehow needs mysql integration, put the initial setup scripts at ./startup/initialMysql. Additional sample data can be placed in ./startup/sampleMysql. Then in your Dockerfile, read (using cat, for example) and then pipes it into the mysql program.
 
