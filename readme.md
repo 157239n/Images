@@ -35,7 +35,7 @@ Have these tools in /usr/local/bin (so you can invoke it directly):
 Extended from 157239n/apache
 
 Have these installed:
-- php
+- php7.4
 
 ## 157239n/mysql
 
@@ -59,6 +59,22 @@ Enabled these apache modules:
 - ssl
 
 Also have pageTemplate.conf and newPage to set things up. It's best to look at the files to understand it.
+
+## 157239n/php7.0
+
+Exactly the same as 157239n/php, but using the default php version, which should be 7-ish
+
+## 157239n/mysql7.0
+
+Exactly the same as 157239n/mysql, but everything on the php end is using the default php version, which should also be 7-ish
+
+## 157239n/proxy
+
+Extended from 157239n/basic. Intended to act as a reverse proxy or serving static content only. If you need dynamic content, just go with the battle-hardened apache. FastCGI in nginx is no faster than mpm_prefork in apache.
+
+Have these installed:
+- gnupg2 (required to install nginx)
+- nginx (completed with hash and checksums and all of that wonderful mess)
 
 # Tools
 
