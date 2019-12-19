@@ -11,6 +11,7 @@ set splitright
 set splitbelow
 set foldmethod=marker
 set nowrap
+set noswapfile
 
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
