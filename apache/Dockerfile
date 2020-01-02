@@ -5,3 +5,5 @@ RUN apt-get update && \
 	&& mv /startup/apache2.conf /etc/apache2/apache2.conf \
 	&& mv /startup/log /usr/local/bin/log \
 	&& mv /startup/dellog /usr/local/bin/dellog
+CMD /startup/entry.sh
+EXPOSE 80

@@ -12,7 +12,7 @@ Have these installed:
 - wget
 - git
 
-Have environment variable DEBIAN_FRONTEND set to noninteractive, which kinda install everything behind the scenes
+Have environment variable DEBIAN\_FRONTEND set to noninteractive, which kinda install everything behind the scenes
 
 ## 157239n/apache
 
@@ -20,67 +20,70 @@ Extended from 157239n/basic
 
 Have apache installed and have custom apache configurations too (just some minor permission changes, not major things like virtual hosts or ports).
 
-This does not assume the final topology of your application, which is kinda nice because it won't restrict you to the way I've been doing it.
-
 Have these tools in /startup (so you have to be in the directory to invoke):
-- certbot.sh, invoking it will install certbot, a tool by Let's Encrypt Certificate Authority for getting SSL certificate. This is not installed as default.
-- deployCerts.sh. Add domain names here using -d options, then execute it to receive the certs. You still have to wire them up though.
+- runApache.sh: this will start apache up
+- entry.sh: default command, will execute runApache.sh and suspend the process, which keeps the container from dying
 
 Have these tools in /usr/local/bin (so you can invoke it directly):
 - log: show apache logs at /var/log/apache2/error.log
 - dellog: empty the logs
 
-## 157239n/php
+Have these ports exposed:
+- 80
 
-Extended from 157239n/apache
+## 157239n/nginx
 
-Have these installed:
-- php7.4
-
-## 157239n/mysql
-
-Extended from 157239n/php
-
-Have these installed:
-- mysql-server
-- php-mysql
-- phpmyadmin (at /var/www/phpmyadmin)
-
-Default user for phpmysql is 157239n and UDZ8qSnsfZeHHKHM for the password
-
-## 157239n/proxy
-
-Extended from 157239n/apache
-
-Enabled these apache modules:
-- rewrite
-- proxy
-- proxy_http
-- ssl
-
-Also have pageTemplate.conf and newPage to set things up. It's best to look at the files to understand it.
-
-## 157239n/php7.0
-
-Exactly the same as 157239n/php, but using the default php version, which should be 7-ish
-
-## 157239n/mysql7.0
-
-Exactly the same as 157239n/mysql, but everything on the php end is using the default php version, which should also be 7-ish
-
-## 157239n/proxy
-
-Extended from 157239n/basic. Intended to act as a reverse proxy or serving static content only. If you need dynamic content, just go with the battle-hardened apache. FastCGI in nginx is no faster than mpm_prefork in apache.
+Extended from 157239n/basic. Intended to act as a reverse proxy or serve static content only. If you need dynamic content, just go with 157239n/php\_fpm
 
 Have these installed:
 - gnupg2 (required to install nginx)
 - nginx (completed with hash and checksums and all of that wonderful mess)
+
+## 157239n/php\_fpm
+
+Extended from 157239n/apache
+
+Have these tools in /startup:
+- setupFpmEnv.sh: you can pipe an environment file here and it will setup the correct environment variables for the php-fpm daemon.
+- runPhpFpm.sh: this will execute runApache.sh and start php-fpm up. Will automatically load environment variables that look like MYSQL\* for convenience sake
+- entry.sh: default command, will execute runPhpFpm.sh and suspend the process, which keeps the container from dying
+
+The default setup and default command should work well for you. If not, you can define your own entry.sh, which broadly speaking should:
+- Execute runPhpFpm.sh, which will start php-fpm and apache2
+- Load environment variables from a file using setupFpmEnv.sh
+- Suspend the process, which is commonly `tail -f /dev/null`
+
+## 157239n/phpmyadmin
+
+Extended from 157239n/php\_fpm
+
+Have phpmyadmin installed.
+
+Configurable using these environment variables:
+- MYSQL\_HOST, default is localhost
 
 # Tools
 
 ## build
 
 Simple enough, builds these images. Also it is expected that you pull the repo down, then build the images yourself. I supposed you know how to do this, because this is stupidly simple. If you don't, you don't know how to use Docker and give Docker Deep Dive a read.
+
+## utils
+
+This is a folder containing various boilerplate scripts that you might find useful:
+- certbot.sh, invoking it will install certbot, a tool by Let's Encrypt Certificate Authority for getting SSL certificate.
+- deployCerts.sh. Add domain names here using -d options, then execute it to receive the certs. You still have to wire them up though.
+
+# Extra notes
+
+## Working with mysql
+
+The best practice is to follow the mysql official [image](https://hub.docker.com/_/mysql). Below is a TL;DR version of it:
+- Set MYSQL\_USER
+- Set MYSQL\_PASSWORD
+- Set MYSQL\_RANDOM\_ROOT\_PASSWORD=yes or MYSQL\_ROOT\_PASSWORD
+- Set MYSQL\_DATABASE
+- Add startup scripts (.sh, .sql) at /docker-entrypoint-initdb.d (mount it) so if mysql is empty, this script will set everything up
 
 # Contributing
 
