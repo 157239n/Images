@@ -7,4 +7,6 @@ RUN apt-get update \
 	&& apt-key add nginx_signing.key \
 	&& rm nginx_signing.key \
 	&& apt-get update \
-	&& apt-get install -y nginx
+	&& apt-get install -y nginx \
+    && mv /startup/default.conf /etc/nginx/conf.d/default.conf
+CMD /startup/entry.sh
